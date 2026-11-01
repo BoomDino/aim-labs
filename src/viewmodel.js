@@ -43,14 +43,7 @@ const gunMaterial = new THREE.MeshStandardMaterial({
   roughness: 0.65,
 });
 
-const handMaterial = new THREE.MeshStandardMaterial({
-  color: 0xc49275,
-  roughness: 0.72,
-  metalness: 0.0,
-});
-
 let gunLoaded = false,
-  handLoaded = false,
   loadError = "";
 
 const loader = new FBXLoader();
@@ -84,77 +77,6 @@ loader.load(
   undefined,
   (error) => {
     loadError = "Handgun model failed to load";
-    console.error(error);
-  },
-);
-
-function curlGrip(hand) {
-  const get = (name) => hand.getObjectByName(name);
-
-  // Index finger: rests forward along trigger guard / trigger
-  const b5 = get("Bone005"), b6 = get("Bone006"), b7 = get("Bone007"), b8 = get("Bone008");
-  if (b5) { b5.rotation.z += 0.35; }
-  if (b6) { b6.rotation.z += 0.45; }
-  if (b7) { b7.rotation.z += 0.50; }
-  if (b8) { b8.rotation.z += 0.30; }
-
-  // Middle finger: wrapped firmly around front of grip
-  const b9 = get("Bone009"), b10 = get("Bone010"), b11 = get("Bone011"), b12 = get("Bone012");
-  if (b9)  { b9.rotation.z += 0.55; }
-  if (b10) { b10.rotation.z += 0.70; }
-  if (b11) { b11.rotation.z += 0.75; }
-  if (b12) { b12.rotation.z += 0.50; }
-
-  // Ring finger: wrapped firmly around lower grip
-  const b13 = get("Bone013"), b14 = get("Bone014"), b15 = get("Bone015"), b16 = get("Bone016");
-  if (b13) { b13.rotation.z -= 0.55; }
-  if (b14) { b14.rotation.z -= 0.70; }
-  if (b15) { b15.rotation.z -= 0.75; }
-  if (b16) { b16.rotation.z -= 0.50; }
-
-  // Pinky finger: wrapped around base of grip
-  const b17 = get("Bone017"), b18 = get("Bone018"), b19 = get("Bone019"), b20 = get("Bone020");
-  if (b17) { b17.rotation.z -= 0.55; }
-  if (b18) { b18.rotation.z -= 0.70; }
-  if (b19) { b19.rotation.z -= 0.75; }
-  if (b20) { b20.rotation.z -= 0.50; }
-
-  // Thumb: resting forward along left side of grip under slide
-  const b2 = get("Bone002"), b3 = get("Bone003"), b4 = get("Bone004");
-  if (b2) { b2.rotation.z += 0.25; b2.rotation.x -= 0.30; }
-  if (b3) { b3.rotation.z += 0.45; }
-  if (b4) { b4.rotation.z += 0.40; }
-}
-
-// Load Hand model
-loader.load(
-  "/assets/hand/hand.fbx",
-  (hand) => {
-    hand.traverse((c) => {
-      if (c.isMesh) {
-        c.material = handMaterial;
-        c.frustumCulled = false;
-      }
-    });
-
-    curlGrip(hand);
-
-    const handScale = 0.0075;
-    hand.scale.setScalar(handScale);
-    hand.position.set(-12.8 * handScale, -134.7 * handScale, 8.6 * handScale);
-
-    const handRig = new THREE.Group();
-    handRig.add(hand);
-
-    handRig.rotation.set(0.48, -0.32, 1.48);
-    handRig.position.set(0.11, -0.36, -0.36);
-
-    assembly.add(handRig);
-    handLoaded = true;
-  },
-  undefined,
-  (error) => {
-    loadError = "Hand model failed to load";
     console.error(error);
   },
 );
@@ -206,11 +128,11 @@ export function drawViewmodel(ctx, w, h, time, recoil) {
   renderer.render(scene, camera);
   ctx.drawImage(renderer.domElement, 0, 0, w, h);
 
-  if (!gunLoaded || !handLoaded) {
+  if (!gunLoaded) {
     ctx.save();
     ctx.fillStyle = "#e7ece4";
     ctx.font = "12px sans-serif";
-    ctx.fillText(loadError || "Loading gun and hand models…", w * 0.65, h * 0.9);
+    ctx.fillText(loadError || "Loading handgun model…", w * 0.65, h * 0.9);
     ctx.restore();
   }
 }
