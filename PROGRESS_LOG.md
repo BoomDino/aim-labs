@@ -71,3 +71,14 @@
 - Browser mesh rendering/mouse capture check and four game logic tests passed.
 - Remaining visual limitations: this is a procedural fan recreation, not a 100%
   replica. Exact sculpt, textures, markings and production rig are not available.
+
+## 2026-11-01 — imported Glock model
+
+- Loaded the supplied `Glock.FBX` and albedo/normal textures from Downloads.
+- Replaced procedural Malorian geometry; retained and fitted the cybernetic hand.
+- Added a bundled Three.js/FBXLoader WebGL renderer with depth testing, local
+  textures, recoil, muzzle flash and offline loading. Batched hand faces by material.
+- Added source files and reproducible renderer build command with pinned versions.
+- Preserved Creazilla's source license and redistribution credit.
+- Browser verified FBX/textures load and render without JavaScript errors.
+- Remaining: actual Windows test and physical sensitivity calibration still apply.

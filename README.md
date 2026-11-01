@@ -1,7 +1,7 @@
 # Aim Labs — Local Range
 
 A small, original aim trainer inspired by Gridshot. No affiliation with Aimlabs,
-Valve, or Riot. Runs offline after downloading; no frontend dependencies, assets,
+Valve, or Riot. Runs offline after downloading; bundled frontend dependencies and model assets, no
 accounts, or external requests.
 
 ## Play
@@ -21,7 +21,7 @@ during a session to keep results consistent. Complete 30 seconds to save a score
 ## Features
 
 - Three perspective-projected targets; new target appears after each hit.
-- Original low-poly Malorian 3516-inspired 3D pistol and chrome cybernetic hand,
+- Imported, textured Glock FBX model and original chrome cybernetic hand,
   muzzle flash, recoil, crosshair color, and hit marker.
 - CS2 / CS:GO and Valorant hip-fire sensitivity profiles.
 - Score, accuracy, hits, countdown, pause/resume, and personal top-20 leaderboard.
@@ -62,10 +62,16 @@ Sources:
 
 ## Development
 
-Runtime: Python standard library plus browser Canvas 2D / ES modules. Optional
-Node.js 18+ runs the math tests with `npm test`; no npm install needed for the app.
+Runtime: Python standard library plus browser Canvas 2D / WebGL2 / ES modules. Optional
+Node.js runs the math tests with `npm test`; no npm install needed to play.
+The bundled Three.js renderer and FBXLoader run offline. To rebuild after editing
+`src/`, run `npm ci` then `npm run build` (modern Node.js required).
 
 - `web/app.js`: rendering, input, session lifecycle, browser storage and UI.
+- `src/viewmodel.js`: WebGL gun/hand renderer and FBX loading.
+- `src/hand.js`: original cybernetic hand mesh.
+- `web/viewmodel.js`: generated offline renderer bundle; do not edit directly.
+- `web/assets/glock/`: supplied model, textures, credits and license.
 - `web/core.js`: sensitivity math, ray/sphere hits, scoring and ranking.
 - `run.py`: loopback-only static file server for `web/`.
 - `tests/`: deterministic game logic tests.
@@ -78,24 +84,17 @@ This branch uses targets with radius 0.72 (50% larger than the original 0.48).
 Its 30-second leaderboard has a separate storage key so previous 60-second
 scores remain intact and are not ranked alongside the shorter sessions.
 
-## Silverhand viewmodel
+## Glock viewmodel
 
-`web/viewmodel.js` contains an original stylized polygon mesh of an elongated
-Malorian-inspired pistol and segmented cybernetic hand/forearm. This is a fan
-recreation, not an extracted or official Cyberpunk 2077 model. Mesh faces use
-perspective projection, directional lighting, depth sorting, idle motion and
-shot recoil, rendered locally with Canvas. No external assets or libraries.
+The supplied Glock FBX and textures replace the previous procedural Malorian.
+The original cybernetic hand is retained. Three.js renders the viewmodel with
+real depth testing, texture mapping and lighting; hand polygons are batched by
+material. All required assets are bundled for offline play on Linux and Windows.
+A browser with WebGL2 support is required. The renderer bundle is generated from
+`src/`; this avoids loading dependencies from a CDN.
 
-### Reference refinement
+Model by **Creazilla.com**. See [model credits](web/assets/glock/CREDITS.md) and
+[original license](web/assets/glock/license.txt). Three.js MIT license is included
+in `web/vendor/THREE-LICENSE.txt` (bundle also retains third-party notices).
 
-The viewmodel was refined using the user-provided Cyberpunk artbook arm image
-and a clear Malorian weapon reference after the linked wiki blocked access.
-Features include a chamfered slide, exposed rear cylinder, recessed muzzle,
-perforated grip, articulated chrome fingers, tapered forearm armor, black
-actuators and exposed crimson flexor cables. Chrome uses directional lighting
-and stylized surface highlights. This is still an approximation; official
-mesh topology, textures, engravings and rigging are not reproduced exactly.
-
-Reference links (images are not bundled in this repository):
-- https://cyberpunk.fandom.com/wiki/Malorian_Arms_3516_(2077)
-- https://pbs.twimg.com/media/EivUjHIUcAUTOSR.jpg
+The hand remains a reference-guided fan recreation, not an official game asset.
