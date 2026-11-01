@@ -1,3 +1,5 @@
+export const SESSION_SECONDS = 30;
+export const TARGET_RADIUS = 0.72;
 export const YAW = Object.freeze({ cs2: 0.022, valorant: 0.07 });
 export const radians = (degrees) => (degrees * Math.PI) / 180;
 export function rotation(counts, sensitivity, game) {
@@ -19,7 +21,7 @@ export function direction(yaw, pitch) {
     Math.cos(yaw) * Math.cos(pitch),
   ];
 }
-export function hitSphere(ray, target, radius = 0.48) {
+export function hitSphere(ray, target, radius = TARGET_RADIUS) {
   const dot = ray.reduce((n, v, i) => n + v * target[i], 0);
   return (
     dot > 0 &&

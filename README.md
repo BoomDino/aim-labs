@@ -16,12 +16,13 @@ Install Python 3.9+ and a current desktop browser (Chrome or Edge recommended).
 Enter your player name, sensitivity scale, in-game sensitivity, and actual mouse
 DPI. Click **Enter the range** to capture the mouse. Shoot with left click; Esc
 pauses and releases the cursor. Resume using the button. Settings stay locked
-during a session to keep results consistent. Complete 60 seconds to save a score.
+during a session to keep results consistent. Complete 30 seconds to save a score.
 
 ## Features
 
 - Three perspective-projected targets; new target appears after each hit.
-- Original geometric pistol, muzzle flash, crosshair color, and hit marker.
+- Original low-poly Malorian 3516-inspired 3D pistol and chrome cybernetic hand,
+  muzzle flash, recoil, crosshair color, and hit marker.
 - CS2 / CS:GO and Valorant hip-fire sensitivity profiles.
 - Score, accuracy, hits, countdown, pause/resume, and personal top-20 leaderboard.
 - Local browser persistence for settings and completed sessions.
@@ -72,3 +73,15 @@ Node.js 18+ runs the math tests with `npm test`; no npm install needed for the a
 
 The earlier desktop automation prototype is preserved under `legacy/` for
 reference. It is not imported by or required for this game.
+
+This branch uses targets with radius 0.72 (50% larger than the original 0.48).
+Its 30-second leaderboard has a separate storage key so previous 60-second
+scores remain intact and are not ranked alongside the shorter sessions.
+
+## Silverhand viewmodel
+
+`web/viewmodel.js` contains an original stylized polygon mesh of an elongated
+Malorian-inspired pistol and segmented cybernetic hand/forearm. This is a fan
+recreation, not an extracted or official Cyberpunk 2077 model. Mesh faces use
+perspective projection, directional lighting, depth sorting, idle motion and
+shot recoil, rendered locally with Canvas. No external assets or libraries.

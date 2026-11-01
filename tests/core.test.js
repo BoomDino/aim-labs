@@ -25,6 +25,8 @@ test("a full turn and conversion preserve physical rotation", () => {
 });
 test("sphere hit testing rejects misses and targets behind player", () => {
   assert.equal(hitSphere(direction(0, 0), [0, 0, 15]), true);
+  assert.equal(hitSphere(direction(0, 0), [0.6, 0, 15]), true);
+  assert.equal(hitSphere(direction(0, 0), [0.8, 0, 15]), false);
   assert.equal(hitSphere(direction(0, 0), [1, 0, 15]), false);
   assert.equal(hitSphere(direction(0, 0), [0, 0, -15]), false);
   assert.equal(hitSphere(direction(Math.PI / 2, 0), [15, 0, 0]), true);

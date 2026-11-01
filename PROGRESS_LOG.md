@@ -34,3 +34,27 @@
 ### Optional future work (not required for this simple local version)
 - Other training modes, sound, and export/import of scores.
 - Online leaderboard would require a backend, accounts, and score verification.
+
+## 2026-11-01 — Silverhand variant (`feature/silverhand-30s`)
+
+### Completed
+- Replaced the flat gun drawing with an original stylized 3D Malorian-inspired
+  pistol and chrome cybernetic hand/forearm, as approved by the user.
+- Added model-space polygon geometry, perspective, face lighting, depth sorting,
+  idle sway, recoil and muzzle flash. No downloaded game assets or dependencies.
+- Increased target radius from 0.48 to 0.72 (50% larger); rendering, hit detection
+  and spawn spacing use the same shared radius constant.
+- Changed rounds and UI to 30 seconds using a shared session constant.
+- Isolated the 30-second leaderboard from the original 60-second records.
+- Updated README and tested the expanded hit boundary.
+
+### Validation
+- All four logic tests pass.
+- Chromium verified 30-second HUD, mouse capture, mesh rendering and pause.
+- Browser virtual-time test completed the shortened round and verified score
+  persistence across reload. No browser JavaScript errors in the visual check.
+- Inspected the rendered gun/hand and adjusted pose to keep the crosshair clear.
+
+### Remaining
+- Actual Windows and physical sensitivity verification from the first milestone
+  still apply. The model is intentionally stylized, not the official game asset.

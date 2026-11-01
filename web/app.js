@@ -1,4 +1,7 @@
+import { drawViewmodel } from "./viewmodel.js";
 import {
+  SESSION_SECONDS,
+  TARGET_RADIUS,
   rotation,
   cm360,
   convert,
@@ -23,7 +26,8 @@ try {
   const saved = JSON.parse(localStorage.getItem("aim-settings"));
   if (saved)
     for (const k of fields) if (saved[k] != null) settings[k] = saved[k];
-  records = JSON.parse(localStorage.getItem("aim-records")) || [];
+  records =
+    JSON.parse(localStorage.getItem("aim-records-gridshot-30s-large")) || [];
   if (!Array.isArray(records)) records = [];
   records = records.filter(
     (r) =>
@@ -47,7 +51,10 @@ for (const k of fields) $(k).value = settings[k];
 function save() {
   try {
     localStorage.setItem("aim-settings", JSON.stringify(settings));
-    localStorage.setItem("aim-records", JSON.stringify(records));
+    localStorage.setItem(
+      "aim-records-gridshot-30s-large",
+      JSON.stringify(records),
+    );
   } catch {
     $("storage").textContent =
       "Could not save to browser storage. This session remains visible.";
@@ -109,7 +116,7 @@ let yaw = 0,
   pitch = 0,
   hits = 0,
   shots = 0,
-  remaining = 60,
+  remaining = SESSION_SECONDS,
   playing = false,
   started = false,
   last = performance.now(),
@@ -124,7 +131,8 @@ function spawn(index) {
   } while (
     targets.some(
       (other, i) =>
-        i !== index && Math.hypot(other[0] - t[0], other[1] - t[1]) < 1.3,
+        i !== index &&
+        Math.hypot(other[0] - t[0], other[1] - t[1]) < TARGET_RADIUS * 2 + 0.2,
     )
   );
   targets[index] = t;
@@ -192,7 +200,7 @@ document.addEventListener("pointerlockchange", () => {
   if (playing) {
     if (!started) {
       yaw = pitch = hits = shots = 0;
-      remaining = 60;
+      remaining = SESSION_SECONDS;
       targets = [];
       for (let i = 0; i < 3; i++) spawn(i);
       started = true;
@@ -298,7 +306,7 @@ function draw(now) {
   for (const t of targets) {
     const p = project(t, w, h);
     if (!p) continue;
-    const r = 0.48 * p[2];
+    const r = TARGET_RADIUS * p[2];
     if (p[0] < -r || p[0] > w + r || p[1] < -r || p[1] > h + r) continue;
     const g = ctx.createRadialGradient(
       p[0] - r * 0.3,
@@ -319,38 +327,7 @@ function draw(now) {
     ctx.fill();
     ctx.shadowBlur = 0;
   }
-  // Original geometric pistol, independent of camera aim and hit detection.
-  ctx.save();
-  ctx.translate(w * 0.67, h + (flash > 0 ? 12 : 0));
-  ctx.fillStyle = "#20262a";
-  ctx.strokeStyle = "#778087";
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.moveTo(-28, 0);
-  ctx.lineTo(-15, -82);
-  ctx.lineTo(-45, -152);
-  ctx.lineTo(-28, -180);
-  ctx.lineTo(14, -180);
-  ctx.lineTo(60, -65);
-  ctx.lineTo(86, 0);
-  ctx.closePath();
-  ctx.fill();
-  ctx.stroke();
-  ctx.fillStyle = "#536167";
-  ctx.fillRect(-25, -177, 36, 64);
-  ctx.fillStyle = "#11171b";
-  ctx.fillRect(-17, -178, 20, 17);
-  ctx.fillStyle = "#b5f76c";
-  ctx.fillRect(-9, -187, 5, 8);
-  if (flash > 0) {
-    ctx.fillStyle = "#ffdb7c";
-    ctx.beginPath();
-    ctx.moveTo(-36, -185);
-    ctx.lineTo(-7, -235);
-    ctx.lineTo(24, -184);
-    ctx.fill();
-  }
-  ctx.restore();
+  drawViewmodel(ctx, w, h, now, flash);
   ctx.strokeStyle = settings.color;
   ctx.lineWidth = 2;
   ctx.beginPath();
