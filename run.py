@@ -6,12 +6,26 @@ import argparse
 import threading
 import webbrowser
 
+
+class LocalHandler(SimpleHTTPRequestHandler):
+    # ES modules require a JavaScript MIME type, even on systems whose MIME
+    # registry associates .js with text/plain (notably some Windows installs).
+    extensions_map = {
+        **SimpleHTTPRequestHandler.extensions_map,
+        '.js': 'text/javascript',
+        '.mjs': 'text/javascript',
+        '.css': 'text/css',
+    }
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=8765)
     parser.add_argument('--no-browser', action='store_true')
     args = parser.parse_args()
-    handler = partial(SimpleHTTPRequestHandler, directory=str(Path(__file__).parent / 'web'))
+    if not 1 <= args.port <= 65535:
+        parser.error('--port must be between 1 and 65535')
+    handler = partial(LocalHandler, directory=str(Path(__file__).resolve().parent / 'web'))
     try:
         server = ThreadingHTTPServer(('127.0.0.1', args.port), handler)
     except OSError as error:

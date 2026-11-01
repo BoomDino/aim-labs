@@ -4,14 +4,84 @@ A small, original aim trainer inspired by Gridshot. No affiliation with Aimlabs,
 Valve, or Riot. Runs offline after downloading; bundled frontend dependencies and model assets, no
 accounts, or external requests.
 
+## Run locally on Windows, macOS, or Linux
+
+You need **Python 3.9 or newer** and a desktop browser with **WebGL2** and
+**Pointer Lock** support. No Python packages, Node.js, npm install, account, or
+internet connection is needed to play once the project is downloaded.
+
+### 1. Download the project
+
+Download and extract the ZIP from the GitHub branch you want to use, or clone it:
+
+```sh
+git clone --branch feature/real-models https://github.com/BoomDino/aim-labs.git
+cd aim-labs
+```
+
+If you downloaded a ZIP, open a terminal in the extracted folder containing
+`run.py`. Keep the entire `web/` folder, including its model and texture assets.
+
+### 2. Start the local server
+
+**Windows (PowerShell or Command Prompt)**
+
+Install Python from [python.org](https://www.python.org/downloads/) if needed;
+enable **Add Python to PATH** during installation. Double-click `start.bat`, or run:
+
+```powershell
+py -3 run.py
+```
+
+If the `py` launcher is unavailable, use `python run.py` instead.
+
+**macOS (Terminal)**
+
+Install Python 3 from [python.org](https://www.python.org/downloads/) if
+`python3 --version` is unavailable or older than 3.9. Run:
+
+```sh
+python3 run.py
+```
+
+**Linux (Terminal)**
+
+Check `python3 --version`. If needed, install Python 3 through your distribution's
+package manager (for example, `sudo apt install python3` on Debian/Ubuntu). Run:
+
+```sh
+python3 run.py
+```
+
+On macOS and Linux, `sh start.sh` also works, including when the extracted script
+is not executable. Both launchers accept the same options as `run.py`.
+
+### 3. Open and play
+
+The server opens your default browser automatically. If it does not, visit
+**http://127.0.0.1:8765**. Keep the terminal running while playing; press **Ctrl+C**
+in that terminal to stop the server. The server listens only on your own computer.
+Do not double-click `web/index.html`: browser modules and assets need the HTTP server.
+
+### Options and troubleshooting
+
+- **Port already in use:** run `python3 run.py --port 8766` on macOS/Linux or
+  `py -3 run.py --port 8766` on Windows, then visit http://127.0.0.1:8766.
+- **Do not open a browser automatically:** add `--no-browser` to the command.
+- **Python not found:** install Python, then close and reopen your terminal.
+- **Old graphics after updating:** refresh with Ctrl+Shift+R (Windows/Linux) or
+  Cmd+Shift+R (macOS).
+- **Blank range or graphics errors:** use a browser with WebGL2 enabled and check
+  that hardware acceleration is available. Check the browser console for errors.
+- **Mouse does not move the view:** click **Enter the range** and allow pointer
+  capture. Press Esc to release it.
+- **Connection refused:** check that the terminal still shows the running server
+  and that the browser URL uses the port printed there.
+
+Use the same address and port each time to keep the same saved settings and scores.
+`localhost` and `127.0.0.1` have separate browser storage.
+
 ## Play
-
-Install Python 3.9+ and a current desktop browser (Chrome or Edge recommended).
-
-- **Windows:** double-click `start.bat`, or run `py -3 run.py`.
-- **Linux:** run `./start.sh`, or `python3 run.py`.
-- Open http://127.0.0.1:8765 if the browser does not open automatically.
-- Stop the local server with Ctrl+C. Use `python run.py --port 8766` if busy.
 
 Enter your player name, sensitivity scale, in-game sensitivity, and actual mouse
 DPI. Click **Enter the range** to capture the mouse. Shoot with left click; Esc
@@ -21,7 +91,7 @@ during a session to keep results consistent. Complete 30 seconds to save a score
 ## Features
 
 - Three perspective-projected targets; new target appears after each hit.
-- Imported, textured Glock FBX model and original chrome cybernetic hand,
+- Imported, textured Glock FBX model,
   muzzle flash, recoil, crosshair color, and hit marker.
 - CS2 / CS:GO and Valorant hip-fire sensitivity profiles.
 - Score, accuracy, hits, countdown, pause/resume, and personal top-20 leaderboard.
@@ -68,8 +138,7 @@ The bundled Three.js renderer and FBXLoader run offline. To rebuild after editin
 `src/`, run `npm ci` then `npm run build` (modern Node.js required).
 
 - `web/app.js`: rendering, input, session lifecycle, browser storage and UI.
-- `src/viewmodel.js`: WebGL gun/hand renderer and FBX loading.
-- `src/hand.js`: original cybernetic hand mesh.
+- `src/viewmodel.js`: WebGL handgun renderer and FBX loading.
 - `web/viewmodel.js`: generated offline renderer bundle; do not edit directly.
 - `web/assets/glock/`: supplied model, textures, credits and license.
 - `web/core.js`: sensitivity math, ray/sphere hits, scoring and ranking.
@@ -87,14 +156,12 @@ scores remain intact and are not ranked alongside the shorter sessions.
 ## Glock viewmodel
 
 The supplied Glock FBX and textures replace the previous procedural Malorian.
-The original cybernetic hand is retained. Three.js renders the viewmodel with
-real depth testing, texture mapping and lighting; hand polygons are batched by
-material. All required assets are bundled for offline play on Linux and Windows.
+Three.js renders the handgun with real depth testing, texture mapping and
+lighting. The hand model has been removed. All required assets are bundled for
+offline play on Windows, macOS, and Linux.
 A browser with WebGL2 support is required. The renderer bundle is generated from
 `src/`; this avoids loading dependencies from a CDN.
 
 Model by **Creazilla.com**. See [model credits](web/assets/glock/CREDITS.md) and
 [original license](web/assets/glock/license.txt). Three.js MIT license is included
 in `web/vendor/THREE-LICENSE.txt` (bundle also retains third-party notices).
-
-The hand remains a reference-guided fan recreation, not an official game asset.
