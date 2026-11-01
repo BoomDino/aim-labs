@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Aim Labs · Local range</title
+  ><link rel="stylesheet" href="style.css" />
+  <body>
+    <header>
+      <a class="brand" href="/">◎ AIM LABS <small>LOCAL RANGE</small></a
+      ><span>FOCUS. FLICK. REPEAT.</span><b>OFFLINE / PERSONAL</b>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <p class="eyebrow">PRECISION STARTS HERE</p>
+          <h1>Make every shot count.</h1>
+          <p>Three targets. Sixty seconds. Find your rhythm.</p>
+        </div>
+        <div class="tag">
+          01 <span>GRIDSHOT<br />TRAINING RANGE</span>
+        </div>
+      </section>
+      <div class="layout">
+        <section class="range">
+          <div class="stats">
+            <div><small>SCORE</small><strong id="score">0</strong></div>
+            <div><small>ACCURACY</small><strong id="accuracy">—</strong></div>
+            <div><small>TIME LEFT</small><strong id="timer">60.0</strong></div>
+            <div><small>HITS</small><strong id="hits">0</strong></div>
+          </div>
+          <div class="viewport">
+            <canvas id="arena" aria-label="Aim training range"></canvas>
+            <div id="overlay">
+              <span class="eyebrow">GRIDSHOT / 60 SECONDS</span>
+              <h2 id="headline">Your next personal best.</h2>
+              <p id="message">
+                Click targets with the crosshair. Esc pauses the session.
+              </p>
+              <button id="start">ENTER THE RANGE ↗</button>
+            </div>
+          </div>
+          <footer>
+            <span>LEFT CLICK · FIRE &nbsp; ESC · PAUSE</span
+            ><span id="inputStatus">Raw input requested on start</span>
+          </footer>
+        </section>
+        <aside>
+          <section class="panel">
+            <p class="eyebrow">YOUR SETUP</p>
+            <h2>Dial it in.</h2>
+            <label
+              >Player name<input
+                id="name"
+                maxlength="24"
+                value="Player"
+                autocomplete="off" /></label
+            ><label
+              >Sensitivity scale<select id="game">
+                <option value="cs2">Counter-Strike 2 / CS:GO</option>
+                <option value="valorant">Valorant</option>
+              </select></label
+            >
+            <div class="pair">
+              <label
+                >In-game sensitivity<input
+                  id="sensitivity"
+                  type="number"
+                  min="0.001"
+                  max="100"
+                  step="any"
+                  value="1" /></label
+              ><label
+                >Mouse DPI<input
+                  id="dpi"
+                  type="number"
+                  min="50"
+                  max="50000"
+                  step="1"
+                  value="800"
+              /></label>
+            </div>
+            <div class="metric">
+              <strong id="distance"></strong><span>cm / 360°</span>
+            </div>
+            <p class="note" id="equivalent"></p>
+            <label
+              >Crosshair color<input id="color" type="color" value="#a9ff58"
+            /></label>
+            <p class="note">
+              Hip-fire scaling. Keep your mouse DPI unchanged. Browser raw input
+              support affects physical matching.
+            </p>
+          </section>
+        </aside>
+      </div>
+      <section class="panel board">
+        <div class="boardhead">
+          <div>
+            <p class="eyebrow">THE PERSONAL CLIMB</p>
+            <h2>Leaderboard</h2>
+          </div>
+          <span>GRIDSHOT · TOP 20 · THIS BROWSER</span>
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr>
+                <th>RANK</th>
+                <th>PLAYER</th>
+                <th>SCORE</th>
+                <th>ACCURACY</th>
+                <th>HITS</th>
+                <th>SETUP</th>
+                <th>DATE</th>
+              </tr>
+            </thead>
+            <tbody id="records"></tbody>
+          </table>
+        </div>
+        <p id="storage" class="note">
+          Completed sessions are saved locally. No account needed.
+        </p>
+      </section>
+    </main>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
