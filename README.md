@@ -150,8 +150,10 @@ The earlier desktop automation prototype is preserved under `legacy/` for
 reference. It is not imported by or required for this game.
 
 This branch uses targets with radius 0.72 (50% larger than the original 0.48).
-Its 30-second leaderboard has a separate storage key so previous 60-second
-scores remain intact and are not ranked alongside the shorter sessions.
+Its 30-second leaderboard uses a versioned browser storage key. The current
+version starts with an empty leaderboard; earlier scores are not imported.
+Player settings are preserved. Scores are local to each browser, not stored in
+the repository.
 
 ## Glock viewmodel
 

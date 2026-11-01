@@ -13,6 +13,8 @@ import {
 const $ = (id) => document.getElementById(id),
   canvas = $("arena"),
   ctx = canvas.getContext("2d");
+// Increment the leaderboard version to start a fresh board without resetting settings.
+const LEADERBOARD_KEY = "aim-records-gridshot-30s-large-v2";
 const fields = ["name", "game", "sensitivity", "dpi", "color"];
 let settings = {
     name: "Player",
@@ -27,7 +29,7 @@ try {
   if (saved)
     for (const k of fields) if (saved[k] != null) settings[k] = saved[k];
   records =
-    JSON.parse(localStorage.getItem("aim-records-gridshot-30s-large")) || [];
+    JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
   if (!Array.isArray(records)) records = [];
   records = records.filter(
     (r) =>
@@ -52,7 +54,7 @@ function save() {
   try {
     localStorage.setItem("aim-settings", JSON.stringify(settings));
     localStorage.setItem(
-      "aim-records-gridshot-30s-large",
+      LEADERBOARD_KEY,
       JSON.stringify(records),
     );
   } catch {
