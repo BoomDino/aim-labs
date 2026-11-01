@@ -58,3 +58,16 @@
 ### Remaining
 - Actual Windows and physical sensitivity verification from the first milestone
   still apply. The model is intentionally stylized, not the official game asset.
+
+## 2026-11-01 — reference-guided model refinement
+
+- Rebuilt the gun geometry with beveled lofted surfaces, a rear breech cylinder,
+  muzzle recesses, sights, machined grooves, trigger guard, and perforated grip.
+- Rebuilt the hand with curled segmented digits, joint pins, fitted palm armor,
+  wrist actuators, tapered forearm shielding and exposed crimson tendons.
+- Added chrome highlights and adjusted the pose to reveal more arm detail.
+- Used the supplied artbook image and an alternate gun image; direct wiki access
+  was blocked. Reference images are not copied into the repository.
+- Browser mesh rendering/mouse capture check and four game logic tests passed.
+- Remaining visual limitations: this is a procedural fan recreation, not a 100%
+  replica. Exact sculpt, textures, markings and production rig are not available.

@@ -85,3 +85,17 @@ Malorian-inspired pistol and segmented cybernetic hand/forearm. This is a fan
 recreation, not an extracted or official Cyberpunk 2077 model. Mesh faces use
 perspective projection, directional lighting, depth sorting, idle motion and
 shot recoil, rendered locally with Canvas. No external assets or libraries.
+
+### Reference refinement
+
+The viewmodel was refined using the user-provided Cyberpunk artbook arm image
+and a clear Malorian weapon reference after the linked wiki blocked access.
+Features include a chamfered slide, exposed rear cylinder, recessed muzzle,
+perforated grip, articulated chrome fingers, tapered forearm armor, black
+actuators and exposed crimson flexor cables. Chrome uses directional lighting
+and stylized surface highlights. This is still an approximation; official
+mesh topology, textures, engravings and rigging are not reproduced exactly.
+
+Reference links (images are not bundled in this repository):
+- https://cyberpunk.fandom.com/wiki/Malorian_Arms_3516_(2077)
+- https://pbs.twimg.com/media/EivUjHIUcAUTOSR.jpg
