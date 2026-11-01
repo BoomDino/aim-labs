@@ -20,6 +20,10 @@
 ### Validation
 - Four Node tests passed: rotation/conversion, ray/sphere hits, scoring, ranking.
 - JavaScript syntax check and local HTTP response check passed.
+- Chromium browser checks passed: sensitivity readout, pointer capture, pause,
+  no JavaScript errors, and no horizontal overflow at 390px viewport width.
+- Completed a session using browser virtual time; leaderboard save and reload passed.
+- Published source to private GitHub repository `BoomDino/aim-labs` on `main`.
 
 ### Remaining before claiming complete cross-platform validation
 - Run on an actual Windows computer and verify mouse capture and launcher.
